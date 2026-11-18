@@ -78,7 +78,10 @@ Without a Mapy.com key the Mapy.com layer shows no tiles; switch to OpenStreetMa
 ## Deploying to GitHub Pages
 
 Pushing to `main` runs [.github/workflows/deploy.yml](.github/workflows/deploy.yml): `npm ci`, lint, build, and
-publish `frontend/dist` to Pages. One-time setup in the GitHub web UI:
+publish `frontend/dist` to Pages. Note: on a free GitHub plan Pages works only for **public** repositories (a private
+repo needs GitHub Pro); and once public, the `data` branch with the session logs is public too.
+
+One-time setup in the GitHub web UI:
 
 1. **Settings > Pages > Build and deployment > Source: GitHub Actions.**
 2. **Settings > Secrets and variables > Actions > Secrets > New repository secret:**
