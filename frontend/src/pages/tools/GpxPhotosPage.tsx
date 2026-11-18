@@ -6,7 +6,6 @@ import exifr from 'exifr';
 import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
 import { useI18nDocumentTitle } from '../../hooks/useDocumentTitle';
-import { useSessionLog } from '../../hooks/useSessionLog';
 import { formatDateTime } from '../../utils/dateTime';
 import { idEditorUrl, josmLoadAndZoomUrl, mapyComUrl, osmCzUrl } from '../../utils/externalLinks';
 import { escapeHtml, htmlToText } from '../../utils/html';
@@ -15,7 +14,6 @@ import { DEFAULT_MAP_CENTER } from '../../utils/mapDefaults';
 import ExternalLink from '../../components/ExternalLink';
 import BaseLayersControl from '../../components/map/BaseLayersControl';
 import ExpandableMap from '../../components/map/ExpandableMap';
-import SessionLogStatusLine from '../../components/SessionLogStatusLine';
 
 type ParsedItemType = 'gpxWaypoint' | 'photo';
 
@@ -282,8 +280,6 @@ const GpxPhotosPage: React.FC = () => {
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
   const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
   const [expandedPhotoId, setExpandedPhotoId] = useState<string | null>(null);
-  const sessionLog = useSessionLog('gpx-photos');
-  const { record: recordSession, end: endSession } = sessionLog;
 
   const listRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const markerRefs = useRef<Record<string, L.Marker | null>>({});
@@ -378,8 +374,7 @@ const GpxPhotosPage: React.FC = () => {
     setErrors([]);
     setActiveItemId(null);
     setHoveredItemId(null);
-    endSession('clear');
-  }, [endSession]);
+  }, []);
 
   const processFiles = useCallback(async (incomingFiles: FileList | File[]) => {
     const fileArray = Array.from(incomingFiles);
@@ -415,31 +410,6 @@ const GpxPhotosPage: React.FC = () => {
       newErrors.push(t('gpxPhotos.unsupported', { names: unsupportedFiles.map(file => file.name).join(', ') }));
     }
 
-    // The session log gets every file as loaded (before de-duplication against what is already shown).
-    recordSession({
-      gpxFiles: gpxFiles.map((file, index) => ({
-        fileName: file.name,
-        fileSize: file.size,
-        waypointCount: gpxResults[index].items.length,
-        waypoints: gpxResults[index].items.map((waypoint) => ({
-          name: waypoint.name,
-          lat: waypoint.lat,
-          lon: waypoint.lon,
-          dateTime: waypoint.dateTime,
-          description: waypoint.description,
-        })),
-      })),
-      photos: jpgFiles.flatMap((file, index) => photoResults[index].items.map((photo) => ({
-        fileName: photo.fileName,
-        fileSize: file.size,
-        lat: photo.lat,
-        lon: photo.lon,
-        dateTime: photo.dateTime,
-        camera: photo.cameraName,
-      }))),
-      warnings: newErrors,
-    });
-
     setItems((prevItems) => {
       const mergedItems = mergeAndDeduplicateItems(prevItems, newItems);
 
@@ -466,7 +436,7 @@ const GpxPhotosPage: React.FC = () => {
 
     setActiveItemId(null);
     setHoveredItemId(null);
-  }, [mergeAndDeduplicateItems, recordSession, t]);
+  }, [mergeAndDeduplicateItems, t]);
 
   const onDropZoneDrop = useCallback(async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -560,7 +530,6 @@ const GpxPhotosPage: React.FC = () => {
             {t('gpxPhotos.clear')}
           </button>
         </div>
-        <SessionLogStatusLine status={sessionLog.status} sessionId={sessionLog.sessionId} />
       </div>
 
       {errors.length > 0 && (

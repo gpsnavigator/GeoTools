@@ -33,8 +33,6 @@ jobs:
         env:
           # Repository secret (Settings > Secrets and variables > Actions > Secrets)
           VITE_MAPY_COM_API_KEY: ${{ secrets.VITE_MAPY_COM_API_KEY }}
-          # Repository variable (Settings > Secrets and variables > Actions > Variables); empty = localStorage only
-          VITE_SESSION_LOG_ENDPOINT: ${{ vars.VITE_SESSION_LOG_ENDPOINT }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: frontend/dist

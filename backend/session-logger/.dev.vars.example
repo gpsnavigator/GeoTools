@@ -1,2 +1,0 @@
-# Copy to .dev.vars (git-ignored) for `npm run dev`.
-GITHUB_TOKEN=github_pat_xxx

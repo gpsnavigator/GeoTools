@@ -11,10 +11,6 @@ dist/
 .env.local
 .env.*.local
 
-# Cloudflare Worker local state
-.wrangler/
-backend/**/.dev.vars
-
 # Editors / OS
 .vscode/
 .idea/

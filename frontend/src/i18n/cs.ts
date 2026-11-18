@@ -93,14 +93,4 @@ export const cs: Translation = {
     unsupported: 'Nepodporované soubory přeskočeny: {{names}}',
     unknownCamera: 'Neznámá kamera',
   },
-
-  sessionLog: {
-    notice: 'Soubory zůstávají ve vašem prohlížeči. Pro testovací účely se tato relace zaznamenává (čas, názvy souborů, souřadnice, údaje waypointů a vaše IP adresa).',
-    statusIdle: 'Záznam relace: zatím není co uložit',
-    statusSaving: 'Záznam relace: ukládám…',
-    statusSavedServer: 'Záznam relace: uloženo na serveru ({{time}})',
-    statusSavedLocal: 'Záznam relace: uloženo jen v tomto prohlížeči ({{time}}) – není nastaven serverový endpoint',
-    statusError: 'Záznam relace: uložení na server selhalo ({{error}}), ponecháno v tomto prohlížeči',
-    sessionId: 'Relace {{id}}',
-  },
 };

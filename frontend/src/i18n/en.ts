@@ -95,16 +95,6 @@ export const en = {
     unsupported: 'Unsupported files skipped: {{names}}',
     unknownCamera: 'Unknown camera',
   },
-
-  sessionLog: {
-    notice: 'Files stay in your browser. For testing, this session (time, file names, coordinates, waypoint details and your IP address) is logged.',
-    statusIdle: 'Session log: nothing to save yet',
-    statusSaving: 'Session log: saving…',
-    statusSavedServer: 'Session log: saved on the server ({{time}})',
-    statusSavedLocal: 'Session log: saved in this browser only ({{time}}) – no server endpoint configured',
-    statusError: 'Session log: server save failed ({{error}}), kept in this browser',
-    sessionId: 'Session {{id}}',
-  },
 } as const;
 
 /** Widens every leaf string literal to `string`, so the Czech file has the same shape with its own texts. */
